@@ -8,6 +8,7 @@ int buttonPin = D3; // Pin for the on/off button
 int dim;
 int button;
 int prevDim;
+int buttonState;
 
 void Hue_Off(){
 
@@ -111,7 +112,15 @@ void loop() {
 
   button = digitalRead(buttonPin);
   if (button == 0){ // Looks for if the button is pressed/connected to ground
-    Hue_Off();
+    buttonState = buttonState + 1;
+    if (buttonState%2 == 0){
+      Hue_Off();
+      delay(100);
+    }
+    else{
+      Hue_On();
+      delay(100);
+    }
     }
 
     dim = analogRead(dimPin); // Reding the dimPin
