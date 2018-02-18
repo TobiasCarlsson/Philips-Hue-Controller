@@ -12,7 +12,7 @@ int prevDim;
 void Hue_Off(){
 
 
-    //Serial.println("Connecting to hue bridge");
+    Serial.println("Turning light off");
     WiFiClient client; // Connection to Philips hue bridge
 
     String state = ("{\"on\":false}"); // Turns of the light
@@ -35,7 +35,7 @@ void Hue_Off(){
 }
 
 void Hue_On() {
-  //Serial.println("Connecting to hue bridge");
+  Serial.println("Turning light on");
   WiFiClient client; // Connection to Philips hue bridge
 
   String state = ("{\"on\":true}"); // Turns on the ligth
@@ -53,12 +53,14 @@ void Hue_On() {
     client.println();
     client.print(state);
 
+    delay(100);
+
   }
   client.stop();
 }
 
 void Hue_Dimmer(int dim) {
-  Serial.println("Connecting to hue bridge");
+  Serial.println("Diming");
   WiFiClient client; // Connection to Philips hue bridge
 
   String state = ("{\"on\":true,\"bri\":"+ String(dim) +"}"); // Turns on the ligth
@@ -76,6 +78,8 @@ void Hue_Dimmer(int dim) {
     client.println(state.length());
     client.println();
     client.print(state);
+
+    delay(100);
 
   }
   client.stop();
@@ -125,5 +129,6 @@ void loop() {
       Hue_Dimmer(dim);
     }
     prevDim = dim;
+    delay(100);
 
 }
