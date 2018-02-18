@@ -15,7 +15,7 @@ void Hue_Off(){
     Serial.println("Turning light off");
     WiFiClient client; // Connection to Philips hue bridge
 
-    String state = ("{\"on\":false}"); // Turns of the light
+    String state = ("{\"on\":false}"); // Turns off the light
 
 
     if(client.connect(HUE_IP, PORT)){
@@ -63,7 +63,7 @@ void Hue_Dimmer(int dim) {
   Serial.println("Diming");
   WiFiClient client; // Connection to Philips hue bridge
 
-  String state = ("{\"on\":true,\"bri\":"+ String(dim) +"}"); // Turns on the ligth
+  String state = ("{\"on\":true,\"bri\":"+ String(dim) +"}"); // Sets the brightness for the light
   //Serial.println(state);
 
 
@@ -85,12 +85,6 @@ void Hue_Dimmer(int dim) {
   client.stop();
 }
 
-/*void on_off() {
-  Hue_Off();
-  return;
-}*/
-
-
 void setup(){
 
   Serial.begin(115200);
@@ -108,8 +102,6 @@ void setup(){
   }
   Serial.println("Connected!");
 
-  // attachInterrupt(digitalPinToInterrupt(buttonPin), on_off, CHANGE);
-
 
 }
 
@@ -125,10 +117,11 @@ void loop() {
     dim = analogRead(dimPin); // Reding the dimPin
     dim = map(dim, 0, 1023, 0, 255); // Maping the analog value 10 bit value to 8 bit value for the pwm
 
-    if(prevDim+20 < dim || prevDim-20 > dim){ // Lokking what the previues value was and compars it to the newer value is
+    if(prevDim+10 < dim || prevDim-10 > dim){ // Lokking what the previues value was and compars it to the newer value is
       Hue_Dimmer(dim);
+      prevDim = dim;
+
     }
-    prevDim = dim;
     delay(100);
 
 }
