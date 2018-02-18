@@ -10,3 +10,4 @@
 #define WIFIF_PASS "secret-password" // Wifi password
 
 #endif
+// !! Important remove "-example" from this file name !!
