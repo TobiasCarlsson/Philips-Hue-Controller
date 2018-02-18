@@ -114,14 +114,14 @@ void setup(){
 void loop() {
 
   button = digitalRead(buttonPin);
-  if (button == 0){
+  if (button == 0){ // Looks for if the button is pressed/connected to ground
     Hue_Off();
     }
 
-    dim = analogRead(dimPin);
-    dim = map(dim, 0, 1023, 0, 255);
+    dim = analogRead(dimPin); // Reding the dimPin
+    dim = map(dim, 0, 1023, 0, 255); // Maping the analog value 10 bit value to 8 bit value for the pwm
 
-    if(prevDim+20 < dim || prevDim-20 > dim){
+    if(prevDim+20 < dim || prevDim-20 > dim){ // Lokking what the previues value was and compars it to the newer value is
       Hue_Dimmer(dim);
     }
     prevDim = dim;
